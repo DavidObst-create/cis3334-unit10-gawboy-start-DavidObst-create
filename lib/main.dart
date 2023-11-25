@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<PaintingInfo> gawboyPaintings = [];                // the list of paintings
   LoadPaintingInfo paintLoader = new LoadPaintingInfo();
+  final PageController ctrl = PageContorller();
 
   // Load the painting information when the app starts
   @override
@@ -56,7 +57,16 @@ class _MyHomePageState extends State<MyHomePage> {
               PointerDeviceKind.mouse,
             },
           ),
-          child: Text( "Display painting and its name and title here"),
+          child: PageView.builder(
+           itemCount: gawboyPaintings.length,
+           itemBuilder: (BuildContext context, int position) {
+             return _buildPaintingCard(position);
+          }
+            child: Image(
+              image: AssetImage('assets/images/' + gawboyPaintings[position].imageFile
+              ),
+            ),
+          ),
         ),
       ),
     );
