@@ -35,12 +35,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<PaintingInfo> gawboyPaintings = [];                // the list of paintings
   LoadPaintingInfo paintLoader = new LoadPaintingInfo();
-  final PageController ctrl = PageContorller();
+  final PageController ctrl = PageController();
 
   // Load the painting information when the app starts
   @override
   void initState() {
+    super.initState();
     gawboyPaintings = paintLoader.InitInCode();
+    setState(() {});
+  }
+
+  Widget _buildPaintingCard(int position) {
+    return Column(
+      children: [
+        Text(gawboyPaintings[position].name),
+        Text(gawboyPaintings[position].gawboyDescription),
+        Image(
+          image: AssetImage('assets/images/' + gawboyPaintings[position].imageFile
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -59,13 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           child: PageView.builder(
            itemCount: gawboyPaintings.length,
-           itemBuilder: (BuildContext context, int position) {
-             return _buildPaintingCard(position);
-          }
-            child: Image(
-              image: AssetImage('assets/images/' + gawboyPaintings[position].imageFile
-              ),
-            ),
+            controller: ctrl,
+            itemBuilder: (context, position) {
+              return _buildPaintingCard(position);
+            },
           ),
         ),
       ),
